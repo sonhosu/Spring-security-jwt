@@ -1,8 +1,10 @@
 package com.cos.jwt.config;
 
 import com.cos.jwt.JwtAuthenticationFilter;
+import com.cos.jwt.JwtAuthorizationFilter;
 import com.cos.jwt.filter.MyFilter1;
 //import com.cos.jwt.filter.MyFilter3;
+import com.cos.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,7 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserRepository userRepository;
     @Autowired
     private final CorsFilter corsFilter;
     @Autowired
@@ -38,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .formLogin().disable()
               .httpBasic().disable() //기본인증방식 제거.
                 .addFilter(new JwtAuthenticationFilter(authenticationManager())) //JwtAuthenticationFilter 필터가 동작하도록 추가.
+                .addFilter(new JwtAuthorizationFilter(authenticationManager() , userRepository)) //JwtAuthorizationFilter 필터가 동작하도록 추가.
               .authorizeRequests()
               .antMatchers("/api/v1/user/**")
               .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
