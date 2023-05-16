@@ -3,7 +3,7 @@ package com.cos.jwt.config;
 
 import com.cos.jwt.filter.MyFilter1;
 import com.cos.jwt.filter.MyFilter2;
-import com.cos.jwt.filter.MyFilter3;
+//import com.cos.jwt.filter.MyFilter3;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,11 +29,11 @@ public class FilterConfig {
         return bean;
     }
 
-    @Bean
+   /* @Bean
     public FilterRegistrationBean<MyFilter3> filter3(){
         FilterRegistrationBean<MyFilter3> bean = new FilterRegistrationBean<>(new MyFilter3());
         bean.addUrlPatterns("/*");  //모든 url에 대해서 필터를 건다.
         bean.setOrder(2);  //우선순위를 3순위로 설정
         return bean;
-    }
+    }*/
 }
